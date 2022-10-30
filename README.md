@@ -1,6 +1,9 @@
 # GTAG-NotificationLib
 Notification ui mod for gorilla tag, allowed to be used by anyone.
-Based of off the notifications from the "LHAX" mod menu, which was also made by me.
+Based of off the notifications from the "LHAX" mod menu, which was also made by larsl2005.
+
+This fork is basically just the normal mod but just placed on your left hand.
+made by 64Will64
 
 # HOW TO INSTALL:
 Put "GTAG_NotificationLib.dll" in the "plugins" folder in the BepInEx folder.
