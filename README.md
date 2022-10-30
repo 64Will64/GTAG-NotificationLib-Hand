@@ -16,4 +16,5 @@ To check the previously sent notification. use "NotifiLib.PreviousNotifi" (to pr
 To clear all notifications use NotifiLib.ClearAllNotifications()
 To clear a certain amount of notifications use NotifiLib.ClearPastNotifications(amount (int))
 
+# MESSAGE FROM WILL:
 ALL GORILLA TAG MODS THAT USE NOTIFICATIONLIB WILL ALSO WORK WITH THIS FORK
