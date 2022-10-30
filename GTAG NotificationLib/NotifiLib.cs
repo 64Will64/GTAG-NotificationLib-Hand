@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 namespace GTAG_NotificationLib
 {
-    [BepInPlugin("HabibiLars.NotificationLib", "NotificationLib", "1.0")]
+    [BepInPlugin("64Will64.HabibiLars.NotificationLib", "NotificationLib (Hands)", "1.0")]
     public class NotifiLib : BaseUnityPlugin
     {
         GameObject HUDObj;
         GameObject HUDObj2;
         GameObject MainCamera;
+        GameObject LeftHand;
         Text Testtext;
         Material AlertText = new Material(Shader.Find("GUI/Text Shader"));
         int NotificationDecayTime = 150;
@@ -30,10 +31,12 @@ namespace GTAG_NotificationLib
             //this is mostly copy pasted from LHAX, which was also made by me.
             //LHAX got leaked the day before this. so i might as well make this public cus people asked me to.
             MainCamera = GameObject.Find("Main Camera");
+            LeftHand = GameObject.Find("LeftHand Controller");
             HUDObj = new GameObject();//GameObject.CreatePrimitive(PrimitiveType.Cube);
             HUDObj2 = new GameObject();
             HUDObj2.name = "NOTIFICATIONLIB_HUD_OBJ";
             HUDObj.name = "NOTIFICATIONLIB_HUD_OBJ";
+            HUDObj2.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             HUDObj.AddComponent<Canvas>();
             HUDObj.AddComponent<CanvasScaler>();
             HUDObj.AddComponent<GraphicRaycaster>();
@@ -52,6 +55,7 @@ namespace GTAG_NotificationLib
             HUDObj.GetComponent<RectTransform>().rotation = Quaternion.Euler(Temp);
             GameObject TestText = new GameObject();
             TestText.transform.parent = HUDObj.transform;
+            TestText.transform.localEulerAngles = new Vector3(89.9802f, 285.9983f, 0);
             Testtext = TestText.AddComponent<Text>();
             Testtext.text = "";
             Testtext.fontSize = 10;
@@ -74,8 +78,8 @@ namespace GTAG_NotificationLib
                     HasInit = true;
                 }
             }
-            HUDObj2.transform.position = new Vector3(MainCamera.transform.position.x, MainCamera.transform.position.y, MainCamera.transform.position.z);
-            HUDObj2.transform.rotation = MainCamera.transform.rotation;
+            HUDObj.transform.position = new Vector3(LeftHand.transform.position.x, LeftHand.transform.position.y, LeftHand.transform.position.z);
+            HUDObj.transform.rotation = LeftHand.transform.rotation;
             //HUDObj.GetComponent<RectTransform>().localPosition = new Vector3(0f, 0f, 1.6f);
             if (Testtext.text != "") //THIS CAUSES A MEMORY LEAK!!!!! -no longer causes a memory leak
             {
@@ -109,6 +113,27 @@ namespace GTAG_NotificationLib
             if (!NotificationText.Contains(Environment.NewLine)) { NotificationText = NotificationText + Environment.NewLine;  }
             thing.transform.GetChild(0).GetComponent<Text>().text = thing.transform.GetChild(0).GetComponent<Text>().text + NotificationText;
             PreviousNotifi = NotificationText;
+        }
+        public static void ClearAllNotifications()
+        {
+            GameObject thing = GameObject.Find("NOTIFICATIONLIB_HUD_OBJ/NOTIFICATIONLIB_HUD_OBJ");
+            thing.transform.GetChild(0).GetComponent<Text>().text = "";
+        }
+        public static void ClearPastNotifications(int amount)
+        {
+            GameObject thing = GameObject.Find("NOTIFICATIONLIB_HUD_OBJ/NOTIFICATIONLIB_HUD_OBJ");
+            string[] Notifilines = null;
+            string newtext = "";
+            Notifilines = thing.transform.GetChild(0).GetComponent<Text>().text.Split(Environment.NewLine.ToCharArray()).Skip(amount).ToArray();
+            foreach (string Line in Notifilines)
+            {
+                if (Line != "")
+                {
+                    newtext = newtext + Line + "\n";
+                }
+            }
+
+            thing.transform.GetChild(0).GetComponent<Text>().text = newtext;
         }
     }
 }
