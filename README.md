@@ -15,3 +15,5 @@ To send a notification, use "NotifiLib.SendNotification("Whatever you want here"
 To check the previously sent notification. use "NotifiLib.PreviousNotifi" (to prevent sending the same notification twice for example);
 To clear all notifications use NotifiLib.ClearAllNotifications()
 To clear a certain amount of notifications use NotifiLib.ClearPastNotifications(amount (int))
+
+ALL GORILLA TAG MODS THAT USE NOTIFICATIONLIB WILL ALSO WORK WITH THIS FORK
